@@ -1,0 +1,66 @@
+<?php
+
+// array for JSON response
+$response = array();
+
+
+if(isset($_POST['tid'])&&isset($_POST['message'])&&isset($_POST['custid'])){
+
+    $tid = $_POST['tid'];
+	$message = $_POST['message'];
+	$custid = $_POST['custid'];
+	
+require_once __DIR__ . '/db_connect.php';
+	$query = "";
+    // connecting to db
+    $db = new DB_CONNECT();
+	
+	 $res = mysql_query("select msgToStore from activeorders where tid ='$tid'");
+		
+	
+
+	
+if(!empty($res)){
+	$mes="";
+	while( $row =  mysql_fetch_array($res) ){
+		$mes = $row["msgToStore"];
+	}
+
+	$mes = $mes."\n".$message;
+	$query = "update activeorders set msgToStore='$mes' where tid = '$tid'";
+	$result = mysql_query($query);
+	//	$result = mysql_query("SELECT * FROM organizations WHERE '$cname' = '$cnamevalue'");
+			$storeinfo = array();		
+if (!empty($result)) {
+        // check for empty result
+		
+        
+
+			//$storeinfo = array();
+
+			$response["success"] = $mes;
+			$response["storeinfo"] = array();
+			array_push($response["storeinfo"], $storeinfo);
+            // echoing JSON response
+            echo json_encode($response);
+
+
+    
+
+    
+}else{
+		$response["success"] = 0;
+	$response["result"] = "1";
+	$response["message"] = "Opps! An error occurred.";
+	echo json_encode($response);
+}
+}
+}else{
+		$response["success"] = 0;
+	$response["result"] = 2;
+    $response["message"] = "Required field(s) is missing";
+ 
+    // echoing JSON response
+    echo json_encode($response);
+}
+?>

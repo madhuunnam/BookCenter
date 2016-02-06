@@ -1,0 +1,54 @@
+create database reviews;
+
+use reviews;
+
+create table storereviews
+(storeId int,
+custName varchar(30),
+date1 date,
+overallStars double,
+revTitle varchar(40),
+speed double,
+quality double,
+comment varchar(1000),
+storeReply varchar(100),
+helpful int,
+noHelp int,
+numFbk int,
+feedback varchar(500));
+
+create table customerviews
+(custId int,
+custName varchar(30),
+storeId int,
+storeName varchar(40),
+date1 date,
+overAllStars double,
+revTitle varchar(50),
+comment varchar(200),
+custReply varchar (200),
+helpFul int,
+noHelp int,
+numFbk int,
+feedBack varchar (500),
+numOverDue int,
+numAbuse int,
+numLost int,
+numFines int);
+
+
+
+create table bookreviews
+(isbn int,
+custName varchar(30),
+date1 date,
+overallstars double,
+revtitle varchar(50),
+comment varchar(200),
+helpful int,
+nohelp int,
+numFbk int,
+feedback varchar(500));
+
+
+

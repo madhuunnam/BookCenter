@@ -1,0 +1,590 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.14
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 30, 2014 at 04:09 PM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `bookstore`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `books`
+--
+DROP Table if exists Books;
+CREATE TABLE IF NOT EXISTS Books (
+	isbn		varchar(20) not null,
+	isbn10		varchar(20),
+	insertDate	date not null,
+	callNum		varchar(30),
+  	title 		varchar(100) CHARACTER SET utf8 NOT NULL,
+	subTitle	varchar(100) CHARACTER SET utf8,
+	
+	altTitle	varchar(100) CHARACTER SET utf8,
+ 	author		varchar(100) CHARACTER SET utf8 NOT NULL,
+	translator	varchar(100) CHARACTER SET utf8,
+	audience	varchar(100) CHARACTER SET utf8,
+	language	varchar(50),
+	editionType	varchar(30),
+	edtionNumber	tinyint,
+	amzonStar	float,
+	amazonReviews	smallint,
+	amazonRevLink	varchar(200),
+	category	varchar(50) CHARACTER SET utf8 NOT NULL,
+	subCat		varchar(50) CHARACTER SET utf8 NOT NULL,
+	subSubCat	varchar(50) CHARACTER SET utf8, 
+	altCat		varchar(50) CHARACTER SET utf8,
+	altSubCat	varchar(50) CHARACTER SET utf8,
+	altSubSubCat	varchar(50) CHARACTER SET utf8,
+	publisherName	varchar(100) CHARACTER SET utf8,
+	pubDate		date,
+	keywords	varchar(256) CHARACTER SET utf8,
+	description	text CHARACTER SET utf8,
+	contents	text CHARACTER SET utf8,
+	fromBackCover	text CHARACTER SET utf8,
+	productFormatDetail	varchar(100),
+	productDimensions	varchar(200),
+	shippingWeight		float,
+	pages		smallint,
+  	PRIMARY KEY (isbn)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table Customers
+--
+
+DROP Table if exists Customers;
+CREATE TABLE IF NOT EXISTS Customers (
+  custID 	int AUTO_INCREMENT KEY,
+  insertDate	date not null,
+  firstName 	varchar(30) CHARACTER SET utf8 NOT NULL,
+  middleName	varchar(30) CHARACTER SET utf8,
+  lastName	varchar(30) CHARACTER SET utf8 NOT NULL,
+  altName	varchar(50),
+  telephoneNumber varchar(30),
+  otherPhone	varchar(30),
+  addrStNum 	varchar(100),
+  addrL2 	varchar(100), 
+  city 		varchar(50),
+  state 	varchar(50),
+  zip		varchar(20),
+  latitude	float(10,6),
+  longtitude	float(10,6),
+  emailAddress 	varchar(100) NOT NULL,
+  password	varchar(30) NOT NULL,
+  cardNumber	varchar(20),
+  cardType 	varchar(20),
+  cardName	varchar(50),
+  cardExp	date,
+  cardCode	varchar(10),
+  billingAddr	varchar(300),
+  paypalNum	varchar(30),
+  homeLib	varchar(100),
+  notify	boolean,
+  deals		boolean,
+  numOverdue	int,
+  numAbuse	int,
+  numLost	int,
+  numFines	int,
+  amtFine	float
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Stores`
+--
+
+DROP Table if exists Stores;
+CREATE TABLE IF NOT EXISTS Stores (
+  	storeID 	int AUTO_INCREMENT,
+	insertDate	date,
+  	storeName 	varchar(100) CHARACTER SET utf8 NOT NULL,
+ 	altStoreName	varchar(100),
+  	addrStNum 	varchar(100) NOT NULL,
+  	addrLine2 	varchar(100),
+  	city 		varchar(50) NOT NULL,
+  	state		varchar(50) NOT NULL,
+  	zip 		varchar(20) NOT NULL,
+	latitude	float(10,6),
+	longtitude	float(10,6),
+  	phone 		varchar(30) NOT NULL,
+  	phone1		varchar(30),
+  	email 		varchar(100) NOT NULL,
+	mgrPasswd	varchar(30) NOT NULL,
+	staffPasswd 	varchar(30),
+  	website		varchar(256) DEFAULT NULL,
+	question	tinyint NOT NULL,
+	answer		varchar(50) NOT NULL,
+  	mgrName 	varchar(50),
+	mgrPhone	varchar(30),
+	mgrEmail	varchar(100),
+  	storeType 	varchar(30) NOT NULL,
+	keywords	varchar(256),
+  	openHour 	varchar(256),
+  	services 	varchar(100) NOT NULL,
+	dueRent		tinyint,
+	dueLent		tinyint,
+	lentLimit	tinyint,
+	graceLend	tinyint,
+	graceRent	tinyint,
+	dueHold		tinyint,
+	selfCheckout	boolean,
+	maxRenew	tinyint,
+	fineRateLend	float,
+	fineRateRent	float,
+	maxFine		float,
+	isbnCnt		int,
+  	PRIMARY KEY (storeID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS StoreAssociations;
+CREATE TABLE IF NOT EXISTS StoreAssociations (
+	storeID		int references stores,
+	storeName	varchar(100),
+	motherID	int references stores (storeID),
+	motherStore	varchar(100),
+	primary key 	(storeID, motherID)
+); 	
+
+
+
+-- --------------------------------------------------
+DROP TABLE IF EXISTS LibMembers;
+CREATE TABLE IF NOT EXISTS LibMembers (
+	custID		int references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+	storeID		int references Stores,
+	storeName	varchar(100) CHARACTER SET utf8,
+	joinDate	date,
+	barcode		varchar(20),
+	pin		varchar(10),
+	activate	boolean,
+	status		varchar(30),
+	primary key	(custID, storeID)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Transactions`
+--
+DROP TABLE IF EXISTS Transactions;
+CREATE TABLE IF NOT EXISTS Transactions (
+	tid		int	NOT NULL AUTO_INCREMENT,
+	storeID		int	references Stores,
+	storeName	varchar(100) CHARACTER SET utf8,
+	custID		int	references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+	transTime	datetime NOT NULL,
+	numberOfLines	int,
+	unitsOrdered	int,
+	title		varchar(100) CHARACTER SET utf8,
+	type		varchar(30),
+	subTot		float,
+	taxRatePercent	float,
+	taxAmount	float,
+	discountPercentage	float,
+	shipFee		float,
+	totPrice	float,
+	receiverName	varchar(100),
+	shippingAddr	varchar(256),
+	shipMethod	varchar(100),
+	deliveryTimeCode	varchar(50),
+	carrierName	varchar(100),
+	deliveryNotes	varchar(300) CHARACTER SET utf8,
+	orderStatus	varchar(30),
+	msgToCust	varchar(300) CHARACTER SET utf8,
+	msgToStore	varchar(300) CHARACTER SET utf8,
+	agentName	varchar(100) CHARACTER SET utf8,
+	notes		varchar(300) CHARACTER SET utf8,
+  	PRIMARY KEY (tid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ActiveOrders`
+--
+DROP TABLE IF EXISTS ActiveOrders;
+CREATE TABLE IF NOT EXISTS ActiveOrders (
+	tid		int	NOT NULL AUTO_INCREMENT,
+	storeID		int	references Stores,
+	storeName	varchar(100) CHARACTER SET utf8,
+	custID		int	references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+	transTime	datetime NOT NULL,
+	numberOfLines	int,
+	unitsOrdered	int,
+	title		varchar(100) CHARACTER SET utf8,
+	type		varchar(30),
+	subTot		float,
+	taxRatePercent	float,
+	taxAmount	float,
+	discountPercentage	float,
+	shipFee		float,
+	totPrice	float,
+	receiverName	varchar(100),
+	shippingAddr	varchar(256),
+	shipMethod	varchar(100),
+	deliveryTimeCode	varchar(50),
+	carrierName	varchar(100),
+	deliveryNotes	varchar(300) CHARACTER SET utf8,
+	orderStatus	varchar(30),
+	msgToCust	varchar(300) CHARACTER SET utf8,
+	msgToStore	varchar(300) CHARACTER SET utf8,
+	agentName	varchar(100) CHARACTER SET utf8,
+	notes		varchar(300) CHARACTER SET utf8,
+  	PRIMARY KEY (tid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS LineItems;
+CREATE TABLE IF NOT EXISTS LineItems (
+	tid		int	references Transactions,
+	lineNumber	int,
+	isbn		varchar(30) NOT NULL,
+	title		varchar(100) CHARACTER SET utf8,
+	description	varchar(200) CHARACTER SET utf8,
+	report		varchar(200),
+	orderQuantity	int default 1,
+	priceAmount	float,
+	type		varchar(20),
+	dueDate		date,
+	PRIMARY KEY (tid, lineNumber)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS OutItems;
+
+CREATE TABLE IF NOT EXISTS OutItmes (
+	storeID		int references Stores,
+	storeName	varchar(100) CHARACTER SET utf8,
+	custID		int references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+	isbn		varchar(20) references Books,
+	title		varchar(100) CHARACTER SET utf8,
+	tid		int references Transactions,
+	quantity	int,
+	type		varchar(20),
+	outDate		date,
+	dueDate		date,
+	PRIMARY KEY (storeID, custID, isbn)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS Inventory;
+
+CREATE TABLE IF NOT EXISTS Inventory (
+	storeID		int references Stores,
+	storeName	varchar(50) CHARACTER SET utf8,
+	isbn		varchar(20) references Books,
+	idx		tinyint,
+	title		varchar(100)  CHARACTER SET utf8,
+	privateCallNum	varchar(20),
+	bookCondition	varchar(30) CHARACTER SET utf8,
+	condDesc	varchar(200) CHARACTER SET utf8,
+	quantity	int,
+	salesPrice	float,
+	rentPrice	float,
+	rentDuration	int,
+	holderID	int,
+	holdDate	date,
+	status		varchar(50),
+	PRIMARY KEY (storeID, isbn, idx)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- -------------------------------------------------------
+DROP TABLE IF EXISTS Ledgers;
+CREATE TABLE IF NOT EXISTS Ledgers (
+	
+	custID		int references Customers,
+	storeID		int references Stores,
+	ledgerNum	int,
+	tid		int references Transactions,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,	
+	storeName	varchar(50) CHARACTER SET utf8,
+	ledgerDate	date,
+	description	varchar(200) CHARACTER SET utf8,
+	chargeToCustAmt	float,
+	custPayAmt	float,
+	payMethod	varchar(20),
+	bal		float,
+	note		varchar(200) CHARACTER SET utf8,
+	PRIMARY KEY (custID, storeID, ledgerNum)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+-- -------------------------------------------------------
+DROP TABLE IF EXISTS Admins;
+CREATE TABLE IF NOT EXISTS Admins (
+  adminID 	int AUTO_INCREMENT primary key,
+  insertDate	date not null,
+  name 		varchar(50) NOT NULL,
+  phone 	varchar(30) NOT NULL,
+  otherPhone	varchar(30),
+  mailAddr	varchar(200) NOT NULL,
+  email 	varchar(100) NOT NULL,
+  password	varchar(30) NOT NULL,
+  question	tinyint not null,
+  answer	varchar(50) not null
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS Organizations;
+
+CREATE TABLE IF NOT EXISTS Organizations (
+  organID		int AUTO_INCREMENT primary key,
+  insertDate		datetime not null,
+  name			varchar(100)  CHARACTER SET utf8 NOT NULL,
+  cname			varchar(100), 
+  foundYear		year,
+  type			varchar(30)  CHARACTER SET utf8 NOT NULL,
+  keywords		varchar(256) CHARACTER SET utf8,
+  telephoneNumber 	varchar(30) NOT NULL,
+  otherPhone		varchar(30),
+  addrStNum 		varchar(100) NOT NULL,
+  addrL2 		varchar(100), 
+  city 			varchar(50) NOT NULL,
+  state 		varchar(50) NOT NULL,
+  country		varchar(50) DEFAULT 'United States',
+  zip			varchar(20) NOT NULL,
+  emailAddress 		varchar(100) NOT NULL,
+  website		varchar(100),
+  username		varchar(30) NOT NULL,
+  password		varchar(30) NOT NULL,
+  status		varchar(30) ,
+  pastor		varchar(50) CHARACTER SET utf8,
+  cpastor		varchar(50) CHARACTER SET utf8,
+  contact		varchar(50) CHARACTER SET utf8,
+  ccontact		varchar(50),
+  numAdults		int,
+  numKids		int,
+  worshipTime		varchar(50),
+  sunSchoolTime		varchar(50),
+  prayerTime		varchar(50),
+  bibleStudyTime	varchar(50),
+  meetingName		varchar(40) CHARACTER SET utf8,
+  meetingTime		varchar(50),
+  meetingName1		varchar(40) CHARACTER SET utf8,
+  meetingTime1		varchar(50)
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS Branches;
+
+CREATE TABLE IF NOT EXISTS Branches (
+  organID		int references Organizations,
+  branchID		int AUTO_INCREMENT primary key,
+  insertDate		date not null,
+  organName		varchar(100) CHARACTER SET utf8,
+  bname			varchar(100) CHARACTER SET utf8 NOT NULL,
+  cbname		varchar(100),
+  description		varchar(200) CHARACTER SET utf8, 
+  contact		varchar(50) CHARACTER SET utf8,
+  ccontact		varchar(50),
+  telephoneNumber 	varchar(30) NOT NULL,
+  otherPhone		varchar(30),
+  address		varchar(300),
+  emailAddress 		varchar(100) NOT NULL,
+  meetingName		varchar(50) CHARACTER SET utf8,
+  meetingTime		varchar(50),
+  meetingDesc		varchar(200) CHARACTER SET utf8
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- -------------------------------------------------------
+DROP TABLE IF EXISTS Messages;
+CREATE TABLE IF NOT EXISTS Messages (
+	msgID		int AUTO_INCREMENT primary key,
+	name		varchar(100)  CHARACTER SET utf8 not null,
+	email		varchar(100) not null,
+	phone		varchar(30),
+	msgTime		datetime,
+	subject		varchar(200) CHARACTER SET utf8,
+	msgText		varchar(300) CHARACTER SET utf8,
+	replyTime	datetime,
+	replyText	varchar(300) CHARACTER SET utf8,
+	replied		boolean,
+	status		varchar(20)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `StoreReviews`
+--
+DROP TABLE IF EXISTS StoreReviews;
+CREATE TABLE IF NOT EXISTS StoreReviews (
+  	storeID 	int references Stores,
+  	custID 		int references Customers,
+  	reviewTime 	datetime NOT NULL,
+  	overallStars	float not null,
+	speed		float,
+	quality		float,
+	revTitle	varchar(200),
+  	comment 	text,
+	storeReply	text,
+	helpful		int,
+	noHelp		int,
+	numFbk		int,
+	feedback	text,
+  PRIMARY KEY (storeID,custID,reviewTime)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `CustReviews`
+--
+DROP TABLE IF EXISTS CustReviews;
+CREATE TABLE IF NOT EXISTS CustReviews (
+  	storeID 	int references Stores,
+	storeName	varchar(100) CHARACTER SET utf8,
+  	custID 		int references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+  	reviewTime 	datetime NOT NULL,
+  	overallStars	float not null,
+	revTitle	varchar(200) CHARACTER SET utf8,
+  	comment 	varchar(300) CHARACTER SET utf8,
+	custReply	varchar(300) CHARACTER SET utf8,
+	helpful		int,
+	noHelp		int,
+	numFbk		int,
+	feedback	varchar(300) CHARACTER SET utf8,
+
+	numOverdue	int,
+	numAbuse	int,
+	numLost		int,
+	numFines	int,
+	amtFine		float,
+  PRIMARY KEY (storeID,custID,reviewTime)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookReviews`
+--
+DROP TABLE IF EXISTS BookReviews;
+CREATE TABLE IF NOT EXISTS BookReviews (
+  	isbn 		varchar(20) references Books,
+	bookTitle	varchar(50) CHARACTER SET utf8,
+  	custID 		int references Customers,
+	custFirstName	varchar(30) CHARACTER SET utf8,
+	custLastName	varchar(30) CHARACTER SET utf8,
+  	reviewTime 	datetime NOT NULL,
+  	overallStars	float not null,
+	revTitle	varchar(200) CHARACTER SET utf8,
+  	comment 	varchar(300) CHARACTER SET utf8,
+	helpful		int,
+	noHelp		int,
+	numFbk		int,
+	feedback	varchar(300) CHARACTER SET utf8,
+  PRIMARY KEY (isbn,custID,reviewTime)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+DROP Table if exists Procures;
+
+CREATE TABLE IF NOT EXISTS Procures (
+  
+	PID 	int AUTO_INCREMENT KEY,
+  
+	StoreName 	varchar(30) CHARACTER SET utf8 NOT NULL,
+  
+	SupplierName	varchar(30) CHARACTER SET utf8,
+  	
+	ProcureTime	datetime NOT NULL,
+  
+	NumberOfLines int,
+  
+	TotalPrice float,
+  
+	UnitsProcured int,
+  
+	AgentName varchar(30) CHARACTER SET utf8,
+  
+	Title varchar (50)
+ CHARACTER SET utf8
+);
+
+
+DROP TABLE IF EXISTS ProcureLineItems;
+
+CREATE TABLE IF NOT EXISTS ProcureLineItems (
+	
+	PID		int 	references Procure,
+	
+	LineNum    	int,
+	
+	isbn       	varchar(30) NOT NULL,
+	
+	title		varchar(100) CHARACTER SET utf8,
+	
+	description	varchar(200) CHARACTER SET utf8,
+	
+	Quantity	int default 1,
+	
+	price		float,
+	
+	PRIMARY KEY (PID, LineNum)		
+
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

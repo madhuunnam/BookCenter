@@ -1,0 +1,153 @@
+<html>
+<head>
+	<style type="text/css">
+	    div {
+        	border: 2px solid;
+        	border-radius: 25px;
+        	background-color: #dddddd; 
+        	padding: 10px 10px 10px 10px;
+        	margin: 10px 10px 10px 10px;
+        	text-align: center;
+    	}    
+
+    	input, button {
+    		border-radius: 15px;
+    		text-align: center;
+    		font-size: 1.2em;
+    		min-width: 100px;
+    	}    
+
+     	button {
+    		font-size: 15px;
+    	}    
+
+    	table {
+        	margin: 0 auto; /* or margin: 0 auto 0 auto */
+      	}    
+
+      	th, td {
+      		padding: 10px 10px 10px 10px;
+      		min-width: 100px;
+      		text-align: center;
+      	}    
+
+      	div.header, th {
+      		color:#cccccc;
+      		background-color: #000000;
+      		border-radius: 25px;
+      	}    
+
+      	div.header {
+      		ont-size: 1.2em;
+      	}
+
+	</style>
+	<script type="text/javascript" src='../js/jquery-2.1.1.min.js'></script>
+	<script type="text/javascript">
+		
+		// $( document ).ready(function() {
+  //       	url = 'http://greensboro.craigslist.org/search/apa';
+		// 	$("#result").load(url);
+		// 	$("#availableResults").show();	
+  //  		});
+
+   		function getResult() {
+			value = $('#keyword').val();
+			value = value.split(' ').join('%20');
+			url = '../php/Grabber.php?searchKey=' + value;
+			$("#result").load(url);
+			$.each($('#resultTable tr'), function(index, tr) {
+				if (index != 0) {
+					tr.remove();
+				}
+
+			});
+			$("#availableResults").show();
+			$("#result").hide();
+			$("#displayResult").hide();
+		}
+
+		function showResult() {
+			$("#displayResult").show();
+			var results = $('#result div.content p');
+			var formDataList = [];
+			for(var i = 0; i < results.length; i++) {
+				var result = results[i];
+				var tr = $('<tr></tr>');
+				tr.append($('<td>' + (i+1) + '</td>'));
+				console.log("i = " + i);
+				var price = 0;
+				try {
+					price = jQuery(result).find("span.price")[0] == undefined ? 0 : jQuery(result).find("span.price")[0].innerHTML;
+			    } catch (e) {
+
+			    }
+
+				var url = 'http://greensboro.craigslist.com' + result.children[0].getAttribute('href');
+				var title = result.children[1].children[1].children[1].firstChild.textContent;
+				var date = result.children[1].children[1].children[0].firstChild.textContent;
+				var location = ""
+				var isLocation = jQuery(result).find("span.pnr small") != undefined;
+				if (isLocation) {
+					try {
+						location = jQuery(result).find("span.pnr small")[0].innerHTML;	
+					} catch (e) {
+
+					}
+						
+				} else {
+					location = "";
+				}
+				var hasPic = false;
+				try {
+					hasPic = jQuery(result).find("span.px span.p")[0].attr('class') == undefined;
+				} catch (e) {
+
+				}
+				var pic = hasPic? 'Y' : 'N';
+				tr.append($('<td>' + title + '</td>'));
+				tr.append($('<td><a href="' + url + '">' + url + '</a></td>'));
+				tr.append($('<td>' + price + '</td>'));
+				tr.append($('<td>' + date + '</td>'));
+				tr.append($('<td>' + location + '</td>'));
+				tr.append($('<td>' + pic + '</td>'));
+				$('#resultTable').append(tr);
+
+				var formData = {url: url, title: title, price: price, date_posted: date, location: location, pictures: pic}
+
+				$.post("../php/insert.php", formData, function(data, textStatus, jqXHR) {
+						console.log(i + ": " + textStatus +  data);
+						
+					}
+				);
+			} 
+			$("#availableResults").hide();
+		}
+	</script>
+</head>
+<body>
+	<div class="header">	
+		<span><b> Enter the keyword you want to search for : <b><input id="keyword" type="text"/> 
+		<button id="search" name="Go" onclick="javascript:getResult();">Go..</button></span><br>
+	
+		<span id="availableResults" style="display:none"> Results are available : <button id="search" name="Go" onclick="javascript:showResult();">Show Results</button>
+		</span>
+	</div>
+	<div id="result" style="display:none"></div>
+	<div id="displayResult" style="display:none">
+		<table id="resultTable">
+			<tr> 
+				<th> # </th>
+				<th> Ad Title </th>
+				<th> Ad URL </th>
+				<th> Price </th>
+				<th> Date Posted </th>
+				<th> Location </th>
+				<th> Pictures </th>
+			</tr>
+		</table>
+	</div>
+	
+
+</body>
+</html>
