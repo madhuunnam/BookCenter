@@ -921,7 +921,7 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 							<td style='text-align:left;'>$bookyear ($pages pages)</td>
 						</tr>
 
-                                                
+                                         
 						<tr>
 							<td style='text-align:left;'><b>Category:</b></td>
 							<td style='text-align:left;'>$bookCat</td>
