@@ -116,6 +116,11 @@ if (isset($_SESSION['storeID']) && isset($_SESSION['type']) && $_SESSION['type']
             	$activeValue = 'TRUE';
                 if ($_POST['activeStatus'] == 'No') {
                     $activeValue = 'FALSE';
+                    $newStatus = 'Suspended';
+                }
+                else if ($_POST['activeStatus'] == 'Yes'){
+                	$activeValue = 'TRUE';
+                	$newStatus = 'Ok';
                 }
                 $updateSQL = 'UPDATE libmembers SET joinDate = CURRENT_DATE, status="'.$newStatus.'", activate='.$activeValue.' WHERE storeID='.$_SESSION['storeID'].' AND custID='.$_POST['custID'];
                 $updateResult = mysql_query($updateSQL);
