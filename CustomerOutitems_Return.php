@@ -202,9 +202,7 @@ session_start();
     <tr>
       <th style="vertical-align: top;">Title<br>
       </th>
-      <th style="vertical-align: top;">Store Name<br>
-      </th>
-      <th style="vertical-align: top;">Type<br>
+      <th style="vertical-align: top;">Library Name<br>
       </th>
       <th style="vertical-align: top;">OutDate<br>
       </th>
@@ -243,7 +241,6 @@ session_start();
     <tr>
       <td style="vertical-align: top;"><?php echo $row['title']; ?></td>
       <td style="vertical-align: top;"><?php echo $row['storeName']; ?></td>
-      <td style="vertical-align: top;"><?php echo $row['type']; ?></td>
       <td style="vertical-align: top;"><?php echo $row['outDate']; ?></td>
       <td style="vertical-align: top;"><?php echo $row['dueDate']; ?></td>
       <td style="vertical-align: top;"><a href='TransactionInfo.php?tid=<?php echo $row['tid']; ?>'><?php echo $row['tid']; ?></a></td>

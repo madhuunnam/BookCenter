@@ -33,10 +33,10 @@
 	
 	$insertResult = mysql_query ( $insertLibmember );
 	if (! $insertResult) {
-		$responseJSON = array('error' => 'You are already a member of this store');
+		$responseJSON = array('error' => 'You are member here already');
 	}
 	else {
-		$responseJSON = array('success' => 'Added membership successfully');
+		$responseJSON = array('success' => 'Your membership request is sent to the librarian successfully. Please check LibMembership tab later');
 	}
 	
 echo json_encode($responseJSON);
