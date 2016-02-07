@@ -775,7 +775,6 @@ if ($optionSelected == "" && $callnum == "" && $libName == "") {
 	
 	/* Show screen 1.5 when user select category or subcat */
 	if ((isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') || (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') || $showBoth) {
-		error_log ( "IN CATEGORY@#@#@#@#" );
 		$heading = 'Browse stores by Categories';
 		$sql = 'Select rtable.bookcat as bookcat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, inv.storeID as storeID from books b';
 		$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause . ') as rtable';
@@ -904,7 +903,6 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 	$db = new DataBase ();
 	$db->conn ();
 	$k = $db->indb ( $sql );
-	error_log ( $sql );
 	?>
 
 	</div>
