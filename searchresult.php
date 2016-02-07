@@ -14,7 +14,7 @@ if (isset ( $_SESSION ['libraryName'] )) {
 $sessionCustID = "";
 if (isset ( $_SESSION ['custID'] )) {
 	$sessionCustID = $_SESSION ['custID'];
-}	
+}
 
 ?>
 
@@ -65,32 +65,31 @@ if (isset ( $_SESSION ['custID'] )) {
 
 	$(document).ready(function() {
 		<?php
-			$showBoth = false;
-			$locationURI = '';
-			if ((isset($_GET['state'])   && $_GET['state'] != '') || (isset($_GET['city'])  && $_GET['city'] != '')) {
-				$locationURI = '&state='. $_GET['state'];
-				if (isset($_GET['city'])  && $_GET['city'] != '') {
-					$locationURI .= '&city=' . $_GET['city'];
-				}
-			} 
-
-			$catgoriesURI = '';
-			if ((isset($_GET['bookcat'])  && $_GET['bookcat'] != '') || (isset($_GET['subcat'])  && $_GET['subcat'] != '')  || 
-				(isset($_GET['subsubcat'])  && $_GET['subsubcat'] != '')) {
-				$catgoriesURI = 'bookcat='. $_GET['bookcat'];
-				if (isset($_GET['subcat'])  && $_GET['subcat'] != '') {
-					$catgoriesURI .= '&subcat=' . $_GET['subcat'];
-				}
-				if (isset($_GET['subsubcat'])  && $_GET['subsubcat'] != '') {
-					$catgoriesURI .= '&subsubcat=' . $_GET['subsubcat'];
-				} else {
-					$catgoriesURI = '&'.$catgoriesURI;
-				}
+		$showBoth = false;
+		$locationURI = '';
+		if ((isset ( $_GET ['state'] ) && $_GET ['state'] != '') || (isset ( $_GET ['city'] ) && $_GET ['city'] != '')) {
+			$locationURI = '&state=' . $_GET ['state'];
+			if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
+				$locationURI .= '&city=' . $_GET ['city'];
 			}
-	
-			if ($locationURI == '' && $catgoriesURI == '') {
-				$showBoth = true;
+		}
+		
+		$catgoriesURI = '';
+		if ((isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') || (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') || (isset ( $_GET ['subsubcat'] ) && $_GET ['subsubcat'] != '')) {
+			$catgoriesURI = 'bookcat=' . $_GET ['bookcat'];
+			if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
+				$catgoriesURI .= '&subcat=' . $_GET ['subcat'];
 			}
+			if (isset ( $_GET ['subsubcat'] ) && $_GET ['subsubcat'] != '') {
+				$catgoriesURI .= '&subsubcat=' . $_GET ['subsubcat'];
+			} else {
+				$catgoriesURI = '&' . $catgoriesURI;
+			}
+		}
+		
+		if ($locationURI == '' && $catgoriesURI == '') {
+			$showBoth = true;
+		}
 		?>
 	});
 
@@ -159,7 +158,7 @@ if (isset ( $_SESSION ['custID'] )) {
 	function showBook(idValue) {
 		$( "#"+idValue ).dialog({
 	      modal: true,
-	      width: 460,
+	      width: 650,
 	      buttons: {
 	      			"back": function() {
 	      				$( this ).dialog( "close" );
@@ -470,18 +469,34 @@ li.clicked .SubCategories, ul.SubCategories li.clicked .SubSubCategories,
 }
 .ui-dialog-content
 
+
+
  
 
+
+
 table
+
+
+
+
 
 
 #cartTable
 ,
 .ui-dialog-content
 
+
+
  
 
+
+
 table
+
+
+
+
 
 
 #cartTotalsTable
@@ -490,43 +505,83 @@ table
 font-size
 
 
+
+
+
+
 :
+
+
+
+
 
 
 11
 px
 
+
+
  
+
+
 
 !
 important
+
+
+
+
 
 
 ;
 }
 .ui-dialog-content
 
+
+
  
+
+
 
 table
 
 
+
+
+
+
 #cartTable
 
+
+
  
+
+
 
 td
 ,
 .ui-dialog-content
 
+
+
  
+
+
 
 table
 
 
+
+
+
+
 #cartTotalsTable
 
+
+
  
+
+
 
 td
 ,
@@ -534,17 +589,33 @@ td
 padding
 
 
+
+
+
+
 :
 
+
+
  
+
+
 
 2
 px
 
+
+
  
+
+
 
 !
 important
+
+
+
+
 
 
 ;
@@ -554,7 +625,6 @@ important
 <body>
 	<div> 
 <?php
-
 
 $cat = "";
 $subcat = "";
@@ -594,7 +664,7 @@ if (isset ( $_GET ['state'] ))
 	$state = $_GET ['state'];
 if (isset ( $_GET ['city'] ))
 	$city = $_GET ['city'];
-if(isset ($_GET ['libName']))
+if (isset ( $_GET ['libName'] ))
 	$libName = $_GET ['libName'];
 	// if(isset($_GET['storename']))
 	// $storename = $_GET['storename'];
@@ -610,171 +680,172 @@ if ($optionSelected == "" && $callnum == "" && $cat == "" && $subcat == "" && $c
 	die ();
 }
 /* Show screen 1.5 when user enters state or city and clicks on search button */
-if ($optionSelected == "" && $callnum == "" && $libName == "")  {
-	if ((isset($_GET['state'])  && $_GET['state'] != '') || (isset($_GET['city']) && $_GET['city'] != '') || $showBoth) {
-	$storeTypeClause = '';
-	$storeTypeURI = "";
-	if (isset ( $_GET ['type'] ) && $_GET ['type'] != '') {
-		$storeTypeClause = ' and storeType="' . $_GET ['type'] . '" ';
-		$storeTypeURI = "&type=" . $_GET ['type'];
-	}
-	
-	$categoryClause = '';
-	if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
-		$categoryClause = ' and books.category = "' . $_GET ['bookcat'] . '"';
-	}
-	if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
-		$categoryClause .= ' and books.subCat="' . $_GET ['subcat'] . '"';
-	}
-// 	if (isset ( $_GET ['subsubcat'] ) && $_GET ['subsubcat'] != '') {
-// 		$categoryClause .= ' and books.subSubCat="' . $_GET ['subsubcat'] . '"';
-// 	}
-	$heading = 'Browse stores by States';
-	$sql = 'select count(storeID) as storeCount, state from ( ';
-	$sql .= 'Select distinct state, stores.storeID from stores ';
-	$sql .= ' join inventory on inventory.storeID = stores.storeID';
-	$sql .= ' join books on books.isbn = inventory.isbn ' . $categoryClause;
-	$sql .= ' where 1 ';
-	$sql .= $storeTypeClause . $categoryClause;
-	$sql .= ') as t group by state order by state';
-	if (isset ( $_GET ['state'] ) && $_GET ['state'] != '') {
-		$heading = 'Browse stores by Cities in ' . $_GET ['state'];
-		$sql = 'select count(storeID) as storeCount, state, city from ( ';
-		$sql .= 'Select distinct state, city, stores.storeID from stores';
+if ($optionSelected == "" && $callnum == "" && $libName == "") {
+	if ((isset ( $_GET ['state'] ) && $_GET ['state'] != '') || (isset ( $_GET ['city'] ) && $_GET ['city'] != '') || $showBoth) {
+		$storeTypeClause = '';
+		$storeTypeURI = "";
+		if (isset ( $_GET ['type'] ) && $_GET ['type'] != '') {
+			$storeTypeClause = ' and storeType="' . $_GET ['type'] . '" ';
+			$storeTypeURI = "&type=" . $_GET ['type'];
+		}
+		
+		$categoryClause = '';
+		if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
+			$categoryClause = ' and books.category = "' . $_GET ['bookcat'] . '"';
+		}
+		if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
+			$categoryClause .= ' and books.subCat="' . $_GET ['subcat'] . '"';
+		}
+		// if (isset ( $_GET ['subsubcat'] ) && $_GET ['subsubcat'] != '') {
+		// $categoryClause .= ' and books.subSubCat="' . $_GET ['subsubcat'] . '"';
+		// }
+		$heading = 'Browse stores by States';
+		$sql = 'select count(storeID) as storeCount, state from ( ';
+		$sql .= 'Select distinct state, stores.storeID from stores ';
 		$sql .= ' join inventory on inventory.storeID = stores.storeID';
 		$sql .= ' join books on books.isbn = inventory.isbn ' . $categoryClause;
-		$sql .= ' where state="' . $_GET ['state'] . '"';
-		$sql .= $storeTypeClause;
-		$sql .= ') as t group by state, city order by state, city';
-		$showingZip = false;
-		if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
-			$heading = 'Browse stores by Zipcode in ' . $_GET ['city'] . ' ' . $_GET ['state'];
-			$sql = 'select count(storeID) as storeCount, state, city, zip from ( ';
-			$sql .= 'Select distinct state, city, zip, stores.storeID from stores';
+		$sql .= ' where 1 ';
+		$sql .= $storeTypeClause . $categoryClause;
+		$sql .= ') as t group by state order by state';
+		if (isset ( $_GET ['state'] ) && $_GET ['state'] != '') {
+			$heading = 'Browse stores by Cities in ' . $_GET ['state'];
+			$sql = 'select count(storeID) as storeCount, state, city from ( ';
+			$sql .= 'Select distinct state, city, stores.storeID from stores';
 			$sql .= ' join inventory on inventory.storeID = stores.storeID';
 			$sql .= ' join books on books.isbn = inventory.isbn ' . $categoryClause;
-			$sql .= ' where state="' . $_GET ['state'] . '" and city="' . $_GET ['city'] . '"';
-			$sql .= $storeTypeClause . $categoryClause;
-			$sql .= ') as t group by state, city, zip order by state, city, zip';
-			$showingZip = true;
-		}
-	}
-	
-	echo '<h2>' . $heading . '</h2>';
-	
-	$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
-	mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
-	$results = mysql_query ( $sql );
-	echo '<ul>';
-	while ( $row = mysql_fetch_assoc ( $results ) ) {
-		$uri = 'state=' . $row ['state'];
-		$displayText = $row ['state'];
-		if (isset ( $_GET ['state'] ) && $_GET ['state'] != '') {
-			$uri .= '&city=' . $row ['city'];
-			$displayText = $row ['city'];
-		}
-		$url = 'browseResults.php?' . $uri . $storeTypeURI;
-		$storeListUrl = 'storeList.php?' . $uri . $storeTypeURI;
-		
-		if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
-			$url = 'storeList.php?state=' . $row ['state'] . '&city=' . $row ['city'] . '&zip=' . $row ['zip'] . $storeTypeURI;
-			$displayText = $row ['zip'];
-		}
-		
-		$finalURL = $url . $catgoriesURI;
-		if ((! isset ( $_GET ['city'] ) || (isset ( $_GET ['city'] ) && $_GET ['city'] == '')) && $row ['storeCount'] <= 5) {
-			$finalURL = $storeListUrl . $catgoriesURI;
-		}
-		
-		echo '<li><a href="' . $finalURL . '">' . $displayText . '</a> (' . $row ['storeCount'] . ')</li>';
-	}
-	echo '</ul>';
-}
-
-echo '<br><hr><br>';
-$storeClause = ' join stores S on S.storeID = inv.storeID ';
-if (isset($_GET['state']) && $_GET['state'] != '') {
-	$storeClause .=  ' and S.state="'.$_GET['state'].'"';
-} if (isset($_GET['city']) && $_GET['city'] != '') {
-	$storeClause .=  ' and S.city="'.$_GET['city'].'"';
-} if (isset($_GET['type']) && $_GET['type'] != '') {
-	$storeClause .=  ' and S.storeType="'.$_GET['type'].'"';
-}
-
-/* Show screen 1.5 when user select category or subcat*/
-if ((isset($_GET['bookcat'])  && $_GET['bookcat'] != '')|| (isset($_GET['subcat'])  && $_GET['subcat'] != '')  ||  $showBoth) {
-	error_log("IN CATEGORY@#@#@#@#");
-	$heading = 'Browse stores by Categories';
-	$sql = 'Select rtable.bookcat as bookcat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, inv.storeID as storeID from books b';
-	$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause . ') as rtable';
-	$sql .= ' group by bookcat order by bookcat';
-	
-	if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
-		$heading = 'Browse stores by Subcategories of Category: ' . $_GET ['bookcat'];
-		$sql = 'Select rtable.bookcat as bookcat, rtable.subCat as subCat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, b.subCat as subCat, inv.storeID as storeID from books b';
-		$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause;
-		$sql .= ' where b.category="' . $_GET ['bookcat'] . '" ) as rtable';
-		$sql .= ' group by rtable.bookcat, rtable.subCat order by rtable.bookcat, rtable.subCat';
-		$showingZip = false;
-		if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
-			$heading = 'Browse stores by SubSubCategories for Subcategory: ' . $_GET ['subcat'] . ' under Category: ' . $_GET ['bookcat'];
-			$sql = 'Select rtable.bookcat as bookcat, rtable.subCat as subCat, rtable.subSubCat as subSubCat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, b.subCat as subCat, b.subSubCat as subSubCat, inv.storeID as storeID from books b';
-			$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause;
-			$sql .= ' where b.category="' . $_GET ['bookcat'] . '" and b.subCat="' . $_GET ['subcat'] . '" ) as rtable';
-			$sql .= ' group by rtable.bookcat, rtable.subCat, rtable.subSubCat order by rtable.bookcat, rtable.subCat, rtable.subSubCat';
-			$showingZip = true;
-		}
-	}
-	
-	echo '<h2>' . $heading . '</h2>';
-	$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
-	mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
-	$results = mysql_query ( $sql );
-	// echo $sql;
-	echo '<ul>';
-	
-	$storeTypeURI = "";
-	if (isset ( $_GET ['type'] ) && $_GET ['type'] != '') {
-		$storeTypeURI = "&type=" . $_GET ['type'];
-	}
-	
-	$resultCount = mysql_num_rows ( $results );
-	while ( $row = mysql_fetch_assoc ( $results ) ) {
-		$uri = 'bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] );
-		$displayText = $row ['bookcat'];
-		if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
-			$uri .= '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] );
-			$displayText = $row ['subCat'];
-		}
-		$url = 'browseResults.php?' . $uri . $storeTypeURI;
-		$storeListUrl = 'storeList.php?' . $uri . $storeTypeURI;
-		
-		if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
-			$url = 'storeList.php?bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] ) . '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] ) . '&subsubcat=' . str_replace ( '&', '%26', $row ['subSubCat'] ) . $storeTypeURI;
-			$displayText = $row ['subSubCat'];
-			if ($displayText == '') {
-
-                            // added 2 lines below by Fu on 8-16-15 to take care of empty subsubcat ***
-                            $displayText = 'General';
-                            $url = 'storeList.php?bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] ) . '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] ) . $storeTypeURI;
+			$sql .= ' where state="' . $_GET ['state'] . '"';
+			$sql .= $storeTypeClause;
+			$sql .= ') as t group by state, city order by state, city';
+			$showingZip = false;
+			if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
+				$heading = 'Browse stores by Zipcode in ' . $_GET ['city'] . ' ' . $_GET ['state'];
+				$sql = 'select count(storeID) as storeCount, state, city, zip from ( ';
+				$sql .= 'Select distinct state, city, zip, stores.storeID from stores';
+				$sql .= ' join inventory on inventory.storeID = stores.storeID';
+				$sql .= ' join books on books.isbn = inventory.isbn ' . $categoryClause;
+				$sql .= ' where state="' . $_GET ['state'] . '" and city="' . $_GET ['city'] . '"';
+				$sql .= $storeTypeClause . $categoryClause;
+				$sql .= ') as t group by state, city, zip order by state, city, zip';
+				$showingZip = true;
 			}
 		}
 		
-		$finalURL = $url . $locationURI;
-		if ((! isset ( $_GET ['subcat'] ) || (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] == '')) && $row ['storeCount'] <= 5) {
-			$finalURL = $storeListUrl . $locationURI;
-		}
+		echo '<h2>' . $heading . '</h2>';
 		
-		echo '<li><a href="' . $finalURL . '">' . $displayText . '</a>  (' . $row ['storeCount'] . ')</li>';
+		$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
+		mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
+		$results = mysql_query ( $sql );
+		echo '<ul>';
+		while ( $row = mysql_fetch_assoc ( $results ) ) {
+			$uri = 'state=' . $row ['state'];
+			$displayText = $row ['state'];
+			if (isset ( $_GET ['state'] ) && $_GET ['state'] != '') {
+				$uri .= '&city=' . $row ['city'];
+				$displayText = $row ['city'];
+			}
+			$url = 'browseResults.php?' . $uri . $storeTypeURI;
+			$storeListUrl = 'storeList.php?' . $uri . $storeTypeURI;
+			
+			if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
+				$url = 'storeList.php?state=' . $row ['state'] . '&city=' . $row ['city'] . '&zip=' . $row ['zip'] . $storeTypeURI;
+				$displayText = $row ['zip'];
+			}
+			
+			$finalURL = $url . $catgoriesURI;
+			if ((! isset ( $_GET ['city'] ) || (isset ( $_GET ['city'] ) && $_GET ['city'] == '')) && $row ['storeCount'] <= 5) {
+				$finalURL = $storeListUrl . $catgoriesURI;
+			}
+			
+			echo '<li><a href="' . $finalURL . '">' . $displayText . '</a> (' . $row ['storeCount'] . ')</li>';
+		}
+		echo '</ul>';
 	}
 	
-	if ($resultCount == 0) {
-		echo '<li>No Results found </li>';
+	echo '<br><hr><br>';
+	$storeClause = ' join stores S on S.storeID = inv.storeID ';
+	if (isset ( $_GET ['state'] ) && $_GET ['state'] != '') {
+		$storeClause .= ' and S.state="' . $_GET ['state'] . '"';
 	}
-	echo '</ul>';
-}
-}
-/* Show screen#4 (search result page containing booklist) when user searches for a book by entering ISBN or Title or Author or Callnum */
+	if (isset ( $_GET ['city'] ) && $_GET ['city'] != '') {
+		$storeClause .= ' and S.city="' . $_GET ['city'] . '"';
+	}
+	if (isset ( $_GET ['type'] ) && $_GET ['type'] != '') {
+		$storeClause .= ' and S.storeType="' . $_GET ['type'] . '"';
+	}
+	
+	/* Show screen 1.5 when user select category or subcat */
+	if ((isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') || (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') || $showBoth) {
+		error_log ( "IN CATEGORY@#@#@#@#" );
+		$heading = 'Browse stores by Categories';
+		$sql = 'Select rtable.bookcat as bookcat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, inv.storeID as storeID from books b';
+		$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause . ') as rtable';
+		$sql .= ' group by bookcat order by bookcat';
+		
+		if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
+			$heading = 'Browse stores by Subcategories of Category: ' . $_GET ['bookcat'];
+			$sql = 'Select rtable.bookcat as bookcat, rtable.subCat as subCat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, b.subCat as subCat, inv.storeID as storeID from books b';
+			$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause;
+			$sql .= ' where b.category="' . $_GET ['bookcat'] . '" ) as rtable';
+			$sql .= ' group by rtable.bookcat, rtable.subCat order by rtable.bookcat, rtable.subCat';
+			$showingZip = false;
+			if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
+				$heading = 'Browse stores by SubSubCategories for Subcategory: ' . $_GET ['subcat'] . ' under Category: ' . $_GET ['bookcat'];
+				$sql = 'Select rtable.bookcat as bookcat, rtable.subCat as subCat, rtable.subSubCat as subSubCat, count(rtable.storeID) as storeCount from (Select distinct b.category as bookcat, b.subCat as subCat, b.subSubCat as subSubCat, inv.storeID as storeID from books b';
+				$sql .= ' join inventory inv on inv.isbn = b.isbn ' . $storeClause;
+				$sql .= ' where b.category="' . $_GET ['bookcat'] . '" and b.subCat="' . $_GET ['subcat'] . '" ) as rtable';
+				$sql .= ' group by rtable.bookcat, rtable.subCat, rtable.subSubCat order by rtable.bookcat, rtable.subCat, rtable.subSubCat';
+				$showingZip = true;
+			}
+		}
+		
+		echo '<h2>' . $heading . '</h2>';
+		$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
+		mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
+		$results = mysql_query ( $sql );
+		// echo $sql;
+		echo '<ul>';
+		
+		$storeTypeURI = "";
+		if (isset ( $_GET ['type'] ) && $_GET ['type'] != '') {
+			$storeTypeURI = "&type=" . $_GET ['type'];
+		}
+		
+		$resultCount = mysql_num_rows ( $results );
+		while ( $row = mysql_fetch_assoc ( $results ) ) {
+			$uri = 'bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] );
+			$displayText = $row ['bookcat'];
+			if (isset ( $_GET ['bookcat'] ) && $_GET ['bookcat'] != '') {
+				$uri .= '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] );
+				$displayText = $row ['subCat'];
+			}
+			$url = 'browseResults.php?' . $uri . $storeTypeURI;
+			$storeListUrl = 'storeList.php?' . $uri . $storeTypeURI;
+			
+			if (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] != '') {
+				$url = 'storeList.php?bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] ) . '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] ) . '&subsubcat=' . str_replace ( '&', '%26', $row ['subSubCat'] ) . $storeTypeURI;
+				$displayText = $row ['subSubCat'];
+				if ($displayText == '') {
+					
+					// added 2 lines below by Fu on 8-16-15 to take care of empty subsubcat ***
+					$displayText = 'General';
+					$url = 'storeList.php?bookcat=' . str_replace ( '&', '%26', $row ['bookcat'] ) . '&subcat=' . str_replace ( '&', '%26', $row ['subCat'] ) . $storeTypeURI;
+				}
+			}
+			
+			$finalURL = $url . $locationURI;
+			if ((! isset ( $_GET ['subcat'] ) || (isset ( $_GET ['subcat'] ) && $_GET ['subcat'] == '')) && $row ['storeCount'] <= 5) {
+				$finalURL = $storeListUrl . $locationURI;
+			}
+			
+			echo '<li><a href="' . $finalURL . '">' . $displayText . '</a>  (' . $row ['storeCount'] . ')</li>';
+		}
+		
+		if ($resultCount == 0) {
+			echo '<li>No Results found </li>';
+		}
+		echo '</ul>';
+	}
+}  /* Show screen#4 (search result page containing booklist) when user searches for a book by entering ISBN or Title or Author or Callnum */
 else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 	if (isset ( $_GET ['lat'] ))
 		$lat = $_GET ['lat'];
@@ -792,24 +863,25 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 		$pagenumber = $_GET ['pagenumber'];
 	
 	$sql = 'select B.title as title, B.author as author, B.isbn as isbn, B.callNum as callNum, B.category as category, B.subCat as subCat, B.subSubCat as subSubCat, B.publisherName as publisherName, B.editionNumber as editionNumber, B.amazonStar as amazonStar, B.pubDate as pubDate, B.pages as pages, ';
-        $sql .= ' I.bookCondition as bookCondition, I.rentPrice as rentPrice, I.salesPrice as salePrice, I.quantity as availability, ';
-        
-        
+	$sql .= ' I.bookCondition as bookCondition, I.rentPrice as rentPrice, I.salesPrice as salePrice, I.quantity as availability, ';
+	
 	if ($lat != null && $lng != null) {
 		$sql .= " ( 3959 * acos( cos( radians('" . $lat . "') ) * cos( radians( S.latitude  ) ) * cos( radians( S.longtitude  ) - radians('" . $lng . "') ) + sin( radians('" . $lat . "') ) * sin( radians( S.latitude  ) ) ) ) AS distance, ";
 	} else {
 		$sql .= ' "" as distance, ';
 	}
-        // -------------------------- Fu added 5-19:
+	// -------------------------- Fu added 5-19:
 	$sql .= ' S.storeID as storeID, S.storeName as storeName, I.idx as idx, I.holderID as holderID, I.quantity as quantity, S.state as state, S.city as city, ';
 	
-        $sql .= ' B.translator as translator, B.audience as audience, B.editionType as editionType, B.amazonReviews as amazonReviews, B.amazonRevLink as amazonRevLink, ';
-        $sql .= ' B.description as description, B.contents as contents, B.fromBackCover as fromBackCover ';
-        $sql .= ' from books B join inventory I on I.isbn = B.isbn join stores S on S.storeID = I.storeID where 1 ';
-	if($libName != "") {
-		$sql .= " and (I.storeName like '%" . $libName . "%' or S.storeName like '%" .$libName ."')";
+	$sql .= ' B.translator as translator, B.audience as audience, B.editionType as editionType, B.amazonReviews as amazonReviews, B.amazonRevLink as amazonRevLink, ';
+	$sql .= ' B.description as description, B.contents as contents, B.fromBackCover as fromBackCover, ';
+	$sql .= "B.altTitle,B.subTitle, B.language,B.audience,B.productFormatDetail,B.fromBackCover,
+			B.contents,B.subSubCat,B.keywords,B.productDimensions,B.shippingWeight,I.holdDate,S.dueHold";
+	$sql .= ' from books B join inventory I on I.isbn = B.isbn join stores S on S.storeID = I.storeID where 1 ';
+	if ($libName != "") {
+		$sql .= " and (I.storeName like '%" . $libName . "%' or S.storeName like '%" . $libName . "')";
 	}
-        
+	
 	if ($cat != "") {
 		$sql .= " and (B.category like '%" . $cat . "%' or B.subCat like '%" . $cat . "%')";
 	}
@@ -832,7 +904,7 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 	$db = new DataBase ();
 	$db->conn ();
 	$k = $db->indb ( $sql );
-	error_log($sql);
+	error_log ( $sql );
 	?>
 
 	</div>
@@ -841,9 +913,10 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 			<th>Title</th>
 			<th>Author</th>
 			<th>Year</th>
-			<th>Library</th>  <!-- change from Store Name by Fu 5-19 -->
+			<th>Library</th>
+			<!-- change from Store Name by Fu 5-19 -->
 			<th>Availability</th>
-            <th>To Do</th>
+			<th>To Do</th>
 		</tr>
     <?php
 	$count20 = 1;
@@ -886,12 +959,23 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 		$idx = $store [19];
 		$holderID = $store [20];
 		$inventoryQuantity = intval ( $store [21] );
-                $translator = $store [24];
-                $editionType = $store [26];
-                $amazonReviews = $store[27]; 
-                
-       
-	
+		$translator = $store [24];
+		$editionType = $store [26];
+		$amazonReviews = $store [27];
+		
+		// new ones
+		$altTitle = $store [32];
+		$subTitle = $store [33];
+		$language = $store [34];
+		$audience = $store [35];
+		$productFormatDetail = $store [36];
+		$fromBackCover = $store [37];
+		$contents = $store [38];
+		$subSubCat = $store [39];
+		$keywords = $store [40];
+		$productDimensions = $store [41];
+		$shippingWeight = $store [42];
+		
 		echo "<tr class='" . $count20 . "Class " . $count40 . "Class " . $count60 . "Class results'>
 			
 			<td>
@@ -903,41 +987,53 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 							<td colspan=4><h3>$booktitle</h3><br>by <b>$bookAuthor</b></td>
 						</tr>
 						<tr>
+							<td style='text-align:left;' colspan=2><b> Alternate Title: </b> $altTitle</td>
+				       		 <td style='text-align:left;' colspan=2><b> Sub Title: </b> $subTitle</td>
+						</tr>
+						<tr>
 							<td style='text-align:left;' colspan=2><b> Edition: </b> $editionNumber</td>
-                                                        <td style='text-align:left;' colspan=2><b> Edition Type: </b> $editionType</td>
+                            <td style='text-align:left;' colspan=2><b> Edition Type: </b> $editionType</td>
 						</tr>
 						<tr>
 							<td style='text-align:left;' colspan=2><b>ISBN:</b> $isbn</td>
 							<td style='text-align:left;' colspan=2><b>Amazon Rating:</b> $amazonStar</td>
 						</tr>
-                                                <tr>
+                        <tr>
 							<td style='text-align:left;' colspan=2><b>Amazon </b> $amazonReviews</td>
-                                                        
 							<td style='text-align:left;' colspan=2><b>Amazon Link:</b> $store[28]</td>
 						</tr>
 						<tr>
-							<td style='text-align:left;' ><b>Publisher:</b></td>
-							<td style='text-align:left;' colspan=2>$publisherName</td>
-							<td style='text-align:left;'>$bookyear ($pages pages)</td>
+							<td style='text-align:left;' colspan=2><b>Publisher:</b> $publisherName</td>
+							<td style='text-align:left;' colspan=2>$bookyear ($pages pages)</td>
 						</tr>
 						<tr>
-							<td style='text-align:left;'><b>Category:</b></td>
-							<td style='text-align:left;'>$bookCat</td>
-							<td style='text-align:left;'><b>SubCategory:</b></td>
-							<td style='text-align:left;'>$bookSubCat</td>
+							<td style='text-align:left;' colspan=2><b>Category:</b> $bookCat</td>
+							<td style='text-align:left;' colspan=2><b>SubCategory:</b> $bookSubCat</td>
 						</tr>
 						<tr>
 							<td style='text-align:left;'>&nbsp;</td>
 							<td style='text-align:left;'>&nbsp;</td>
-							<td style='text-align:left;'><b>SubSubCategory:</b></td>
-							<td style='text-align:left;'>$bookSubSubCat</td>
+							<td style='text-align:left;'><b>SubSubCategory:</b> $bookSubSubCat</td>
 						</tr>
 						<tr>
-							<td style='text-align:left;' colspan=2><b>Call Number:</b></td>
-							<td style='text-align:left;'>$bookCallNum</td>
-                                                        <td style='text-align:left;' colspan=2><b>Translator:</b></td>
-							<td style='text-align:left;'>$translator</td>
-                                                        
+							<td style='text-align:left;' colspan=2><b>Call Number:</b> $bookCallNum</td>
+                            <td style='text-align:left;' colspan=2><b>Translator:</b> $translator</td>
+						</tr>
+						<tr>
+							<td style='text-align:left;' colspan=2><b>Language:</b> $language</td>
+							<td style='text-align:left;' colspan=2><b>Audience:</b> $audience</td>
+						</tr>
+						<tr>
+							<td style='text-align:left;' colspan=2><b> Product Format Details: </b> $productFormatDetail</td>
+					        <td style='text-align:left;' colspan=2><b> From BackCover: </b> $fromBackCover</td>
+					    </tr>
+						<tr>
+							<td style='text-align:left;' colspan=2><b> Contents: </b> $contents</td>
+				            <td style='text-align:left;' colspan=2><b> Keywords: </b> $keywords</td>
+						</tr>
+						<tr>
+							<td style='text-align:left;' colspan=2><b> Product Dimensions: </b> $productDimensions</td>
+						    <td style='text-align:left;' colspan=2><b> Shipping Weight: </b> $shippingWeight</td>
 						</tr>
 					</table>
 				</div>
@@ -952,13 +1048,15 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 			<td style='text-align:center;'>$bookyear</td>
 			<td style='text-align:center;'><a href='storePage.php?name=$storename&storeId=$storeid' >$storename</a></td>
 			<td style='text-align:center;'>$bookquantity</td>";
+		
+		if ($inventoryQuantity == 0) {
+			// if ($inventoryQuantity == 0 || ($inventoryQuantity == 1 & $holderID != '')) {
+			// change 9-12 Fu ***
+			?>
 
-		if ($inventoryQuantity == 0 ) {
-		//if ($inventoryQuantity == 0 || ($inventoryQuantity == 1 & $holderID != '')) {
-                // change 9-12 Fu ***
-                        ?>
-
-                                <td> <a href="#" onclick="holdIt('<?php echo $subLinkID ?>', '<?php echo $storeid ?>');"> Hold It </a> </td>
+                                <td><a href="#"
+			onclick="holdIt('<?php echo $subLinkID ?>', '<?php echo $storeid ?>');">
+				Hold It </a></td>
                        <?php
 		} else {
 			?>
@@ -972,8 +1070,8 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 							<h3><?php echo $booktitle ?> </h3> <input type="hidden"
 							id='<?php echo $subLinkID ?>Name'
 							value='<?php echo $booktitle ?>'> <input type="hidden"
-								id='<?php echo $subLinkID ?>ISBN' value='<?php echo $isbn ?>'>
-									<input type="hidden" id='<?php echo $subLinkID ?>SalePrice'
+								id='<?php echo $subLinkID ?>ISBN' value='<?php echo $isbn ?>'> <input
+									type="hidden" id='<?php echo $subLinkID ?>SalePrice'
 									value='<?php echo $booksale ?>'> <input type="hidden"
 										id='<?php echo $subLinkID ?>RentPrice'
 										value='<?php echo $bookrent ?>'> <input type="hidden"
@@ -981,8 +1079,7 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 											value='<?php echo $storeid ?>'> <input type="hidden"
 												id='<?php echo $subLinkID ?>storeName'
 												value='<?php echo $storename ?>'> <input type="hidden"
-													id='<?php echo $subLinkID ?>idx'
-													value='<?php echo $idx ?>'>
+													id='<?php echo $subLinkID ?>idx' value='<?php echo $idx ?>'>
 						
 						</td>
 					</tr>
@@ -1011,7 +1108,6 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 	
 	echo '</table>';
 }
-
 class DataBase {
 	public $dbhost = "localhost";
 	public $dbuser = "webclient";
@@ -1031,28 +1127,28 @@ class DataBase {
 ?>
 
 <form method='post' action='addDataSession.php' id="summaryCartForm">
-        <input type="hidden" id="storeID" name="storeID" value=""> 
-        <input type="hidden" id="libraryName" name="libraryName" value=""> 
-        <input type="hidden" id="cartItems" name="cartItems" value=""> 
-        <input type="hidden" id="redirectUrl" name="redirectUrl" value="">
-</form>
+			<input type="hidden" id="storeID" name="storeID" value=""> <input
+				type="hidden" id="libraryName" name="libraryName" value=""> <input
+					type="hidden" id="cartItems" name="cartItems" value=""> <input
+						type="hidden" id="redirectUrl" name="redirectUrl" value="">
+		
+		</form>
 
 
-<div id='cartDialog'>
-        <table id="cartTable">
-                <tr>
-                        <td colspan=5 align="center" style="text-align: center"><h3
-                                        style="text-align: center">Your Cart</h3></td>
-                </tr>
-                <tr>
-                        <th style="width: 150px">Item</th>
-                        <th style="width: 50px">Quantity</th>
-                        <th style="width: 150px">Desc</th>
-                        <th style="width: 75px">price</th>
-                </tr>
-        </table>
-        <br> <br>
-<!-- Fu 5-19-15
+		<div id='cartDialog'>
+			<table id="cartTable">
+				<tr>
+					<td colspan=5 align="center" style="text-align: center"><h3
+							style="text-align: center">Your Cart</h3></td>
+				</tr>
+				<tr>
+					<th style="width: 150px">Item</th>
+					<th style="width: 50px">Quantity</th>
+					<th style="width: 150px">Desc</th>
+					<th style="width: 75px">price</th>
+				</tr>
+			</table>
+			<br> <br> <!-- Fu 5-19-15
                         <hr>
         <table id="cartTotalsTable">
                 <tr>
@@ -1069,16 +1165,14 @@ class DataBase {
                 </tr>
         </table>
 -->
-
-</div>
 		
-<div>
-        <a id="showcartBtn" class="showcartBtn" href="#"
-                onclick="showcart();">Show Cart</a> <a id="checkoutBtn"
-                class="checkoutBtn" href="#" onclick="checkout();">Checkout</a>
-</div>
+		</div>
 
-
+		<div>
+			<a id="showcartBtn" class="showcartBtn" href="#"
+				onclick="showcart();">Show Cart</a> <a id="checkoutBtn"
+				class="checkoutBtn" href="#" onclick="checkout();">Checkout</a>
+		</div>
 
 </body>
 </html>
