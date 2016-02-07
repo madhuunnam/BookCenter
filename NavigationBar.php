@@ -186,10 +186,10 @@ li:hover dt{
   li ul {display: none;}
   ul li a {display: block;background:#404040; padding: 5px 10px 5px 10px;text-decoration: none;
            white-space: nowrap;color: #fff;}
-  ul li a:hover {background: #262626;}
+  ul li a:hover {background: #666666;}
   li:hover ul {display: block; position: absolute;}
   li:hover li {float: none;}
-  li:hover a {background: #262626;}
+  li:hover a {background: #666666;}
   li:hover li a:hover {background: #000;}
   #drop-nav li ul li {border-top: 0px;}
   

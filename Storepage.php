@@ -29,7 +29,7 @@ if (isset ( $_SESSION ['custID'] )) {
 	$customerId = $_SESSION ['custID'];
 }
 
-$categoryID = 01;
+$categoryID = '01';
 if (isset ( $_GET ['categoryId'] )) {
 	$categoryID = $_GET ['categoryId'];
 	error_log ( "Category ID **" . $categoryID );
@@ -43,6 +43,7 @@ if (isset ( $_GET ['categoryId'] )) {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Store Page</title>
 </head>
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -51,10 +52,14 @@ if (isset ( $_GET ['categoryId'] )) {
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<link rel="stylesheet" href="/resources/demos/style.css">
 	
-	
+<script type="text/javascript">
+		$(document).ready(function() {
+			temp = '<?php echo $categoryID ?>';
+			temp = '#cat'+temp;
+			$(temp).removeClass('tryitbtn');
+			$(temp).addClass('tryitbtn1');
 
-
-		<script type="text/javascript">
+	});
 
 	firstBook =true;
     currentStoreID='<?php echo $storeID; ?>';
@@ -69,10 +74,13 @@ if (isset ( $_GET ['categoryId'] )) {
 		echo ";";
 		?>
 			$(document).ready(function() {
+				
 				$('#storeID').val(storeId);
 				$('#libraryName').val(storeName);
 				$('#checkoutBtn').show();
 				$('#showcartBtn').show();
+
+				
 				
     	//	});
 			});
@@ -1479,6 +1487,25 @@ a.tryitbtn:hover, a.tryitbtn:active, a.showbtn:hover, a.showbtn:active {
 	color: #282828;
 }
 
+a.tryitbtn1, a.tryitbtn1:link, a.tryitbtn1:visited, a.showbtn, a.showbtn:link,
+	a.showbtn:visited {
+	font-family: Verdana, Geneva, Tahoma, Arial, Helvetica, sans-serif;
+	display: inline-block;
+	color: #FFFFFF;
+	background-color: #4d4d4d;
+	width: 210px;
+	font-size: 15px;
+	text-align: left;
+	padding: 5px 16px;
+	text-decoration: none;
+	margin-left: 0;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	border: 3px solid black;
+	white-space: nowrap;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
 .master-wrapper-leftside {
 	float: left;
 	width: 250px;
@@ -1509,6 +1536,13 @@ a.tryitbtn:hover, a.tryitbtn:active, a.showbtn:hover, a.showbtn:active {
 	margin: 10px;
 	width: 1250px;
 	vertical-align: top;
+}
+a:link    {color:blue; background-color:transparent; text-decoration:none}
+a:hover   {color:blue; background-color:transparent; text-decoration:underline}
+
+mark { 
+    background-color: black;
+    color: white;
 }
 </style>
 
@@ -1679,42 +1713,43 @@ if (! $first) {
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
-									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=01">
+								<a id=<?php echo 'cat'.'01' ?> class='tryitbtn'
+									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=01"  >
 									BIBLE</a>
 								</td>
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
+								<a id=<?php echo 'cat'.'02' ?> class=tryitbtn
 									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=02">
 									THEOLOGY</a>
 								</td>
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
+								<a id=<?php echo 'cat'.'03' ?> class=tryitbtn
 									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=03">
 									CHRISTIAN LIFE</a>
+									<input type="hidden" id="selectedCat" name="selectedCat" value="03">
 								</td>
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
+								<a id=<?php echo 'cat'.'04' ?> class=tryitbtn
 									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=04">
 									CHRISTIAN MINISTRY</a>
 								</td>
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
+								<a id=<?php echo 'cat'.'05' ?> class=tryitbtn
 									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=05">
 									CHURCH & CHURCH HISTORY</a>
 								</td>
 							</tr>
 							<tr>
 								<td style="width: 200px; height: 45px; border: none;" />
-								<a class=tryitbtn
+								<a id=<?php echo 'cat'.'06' ?> class=tryitbtn
 									href="Storepage.php?name=<?php echo $storename ?>&storeId=<?php echo $storeID;?>&categoryId=06">
 									CD/DVD/OTHER</a>
 								</td>
