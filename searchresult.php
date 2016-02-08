@@ -29,7 +29,7 @@ if (isset ( $_SESSION ['custID'] )) {
 <link rel="stylesheet"
 	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js"></script>
 <!-- include the jquery ui library -->
 <script
 	src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
@@ -320,6 +320,39 @@ if (isset ( $_SESSION ['custID'] )) {
 		var storeID = obj.value;
 		var isbn = obj.name;
 		window.location.href="EditBook.php?store=" + storeID + "&isbn=" + isbn;
+	}
+
+function holdThisBook(isbn, holderId, holdDate, holdDays, storeId, storeName) {
+		if (holderId.length <= 0 || holdDate.length <= 0){
+			var todayDate = Date.today();
+			var newHoldDate = Date.parse(todayDate).add(parseInt(holdDays)).days();
+        	var newHoldDateString = newHoldDate.toString('yyyy-MM-dd');
+     		 	$.ajax({
+                method: "POST",
+                url: "holdBook.php",
+                data:    "&holderId="+ '<?php echo $sessionCustID; ?>' +"&isbn="+isbn 
+                		+ "&sID=" + storeId +"&storeName=" + storeName  + "&holdDate=" + newHoldDateString,
+                success: function(response) {
+             	 	 responseJSON = JSON.parse(response);
+
+					if(responseJSON['loginNeeded'] == 'true'){
+						alert('Please Login. You will redirected back to storepage after login');
+						
+						window.location.href='Login.php';	
+					}else{
+		                 if (responseJSON['error'] != undefined) {
+		                     alert(responseJSON['error']);
+		                 }
+		                 else {
+		                     alert(responseJSON['success']);
+		                 }
+					}
+                }
+     	 	});
+		}
+		else{
+			alert("Book is already hold by another customer. Please wait till "+holdDate );
+		}
 	}
 
 </script>
@@ -956,6 +989,8 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 		$bookDialogID = $subLinkID . 'Dialog';
 		$idx = $store [19];
 		$holderID = $store [20];
+		$holdDate = $store[43];
+		$dueHold = $store[44];
 		$inventoryQuantity = intval ( $store [21] );
 		$translator = $store [24];
 		$editionType = $store [26];
@@ -1050,12 +1085,9 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 		if ($inventoryQuantity == 0) {
 			// if ($inventoryQuantity == 0 || ($inventoryQuantity == 1 & $holderID != '')) {
 			// change 9-12 Fu ***
-			?>
-
-                                <td><a href="#"
-			onclick="holdIt('<?php echo $subLinkID ?>', '<?php echo $storeid ?>');">
-				Hold It </a></td>
-                       <?php
+			echo "<td><a href='#' name='holdit' 
+			onclick='holdThisBook(\"$isbn\",\"$holderID\",\"$holdDate\",\"$dueHold\",\"$storeid\",\"$storeName\");'> Hold It </a></td></tr>";
+			
 		} else {
 			?>
 				<td><a href="#" style="padding: 5px; font-size: 12px;"

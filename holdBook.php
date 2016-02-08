@@ -1,6 +1,5 @@
 <?php
 
-
 session_start ();
 
 $responseJSON = array ();
@@ -29,7 +28,6 @@ else{
 	
 	$sql = "UPDATE Inventory SET holderID = $holderId, holdDate = STR_TO_DATE('$holdDate','%Y-%m-%d')  where storeID = '".$storeID."'  and isbn = '" .$isbn. "';";
 	
-	error_log($sql);
 	$updateResult = mysql_query($sql);
 	if (! $updateResult) {
 		error_log("SQL error while updating holderID and holdDate in Inventory Table");

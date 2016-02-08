@@ -111,14 +111,10 @@ if (isset($_SESSION['storeID']) && isset($_SESSION['type']) && $_SESSION['type']
 
             if(!isset($_SESSION['type']) || $_SESSION['type'] != 'Store') {
                 echo "$( document ).ready(function() { window.location.href='Login.php';});";
-            } else if (isset($_POST['custID']) && isset($_POST['activeStatus'])) {
+            } else if (isset($_POST['custID']) && (isset($_POST['activeStatus']) || isset($_POST['status'])) ){
 				$newStatus = $_POST['status'];
-            	$activeValue = 'TRUE';
-                if ($_POST['activeStatus'] == 'No') {
-                    $activeValue = 'FALSE';
-                    $newStatus = 'Suspended';
-                }
-                else if ($_POST['activeStatus'] == 'Yes'){
+				$activeValue = 'FALSE';
+             	if ($_POST['activeStatus'] == 'Yes'){
                 	$activeValue = 'TRUE';
                 	$newStatus = 'Ok';
                 }
