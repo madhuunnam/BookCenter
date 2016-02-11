@@ -186,7 +186,7 @@ li:hover dt{
   li ul {display: none;}
   ul li a {display: block;background:#404040; padding: 5px 10px 5px 10px;text-decoration: none;
            white-space: nowrap;color: #fff;}
-  ul li a:hover {background: #666666;}
+  ul li a:hover {background: #595959;}
   li:hover ul {display: block; position: absolute;}
   li:hover li {float: none;}
   li:hover a {background: #666666;}
