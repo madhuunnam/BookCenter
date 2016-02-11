@@ -163,7 +163,6 @@ td#search input, td#browseBtn input {
 		<?php 
 			if($_SESSION['type']=='Store'){
 			$sql1 = "select * from stores where storeID='" . $_SESSION ['storeID'] . "'";
-			
 			$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
 			mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
 			$results1 = mysql_query ( $sql1 );
@@ -406,7 +405,7 @@ td#search input, td#browseBtn input {
 									type="text" name="libName" id="libName" placeholder = "Library Name"
 									style="border:1; width:365px; height:23px; line-height:22px; padding:0 5px 0 5px; color:#c4c4c4;font-family: Arial"
 									onblur="changeColorGray4(this)"
-									oncli	ck="changeColorBlack4(this)" /></td>
+									onclick="changeColorBlack4(this)" /></td>
 								<td><a href ="#" onclick="fillHomeLib();">Fill HomeLib</a></td>
 							</tr>
 							<tr>

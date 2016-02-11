@@ -1086,7 +1086,7 @@ else if ($callnum != "" || $optionSelected != "" || $libName != "") {
 			// if ($inventoryQuantity == 0 || ($inventoryQuantity == 1 & $holderID != '')) {
 			// change 9-12 Fu ***
 			echo "<td><a href='#' name='holdit' 
-			onclick='holdThisBook(\"$isbn\",\"$holderID\",\"$holdDate\",\"$dueHold\",\"$storeid\",\"$storeName\");'> Hold It </a></td></tr>";
+			onclick='holdThisBook(\"$isbn\",\"$holderID\",\"$holdDate\",\"$dueHold\",\"$storeid\",\"$storename\");'> Hold It </a></td></tr>";
 			
 		} else {
 			?>
