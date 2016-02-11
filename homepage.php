@@ -2,7 +2,6 @@
 session_start ();
 include 'NavigationBar.php';
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -159,11 +158,12 @@ td#search input, td#browseBtn input {
     });
    }
     function fillHomeLib(){
-		
 		<?php 
 		$libraryName ="";
-		
-			if($_SESSION['type']=='Store'){
+			if($_SESSION['type'] = null){
+				$libraryName ="";
+			}
+			else if($_SESSION['type']=='Store'){
 			$sql1 = "select * from stores where storeID='" . $_SESSION ['storeID'] . "'";
 			$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
 			mysql_select_db ( "bookstore" ) or die ( "can not connect database：" . mysql_error () );
