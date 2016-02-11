@@ -159,6 +159,8 @@ td#search input, td#browseBtn input {
    }
     function fillHomeLib(){
 		<?php 
+		$libraryName= '';
+		if(isset($_SESSION['loggedIn'])){
 		 if($_SESSION['type']=='Store'){
 			$sql1 = "select * from stores where storeID='" . $_SESSION ['storeID'] . "'";
 			$dbconn = mysql_connect ( "localhost", "webclient", "12345678" ) or die ( "database error!" . mysql_error () );
@@ -177,7 +179,9 @@ td#search input, td#browseBtn input {
 				$libraryName = $row2['homeLib'];
 			}
 		}
+		}
 		?>
+		
 		document.getElementById('libName').value = '<?php echo $libraryName; ?>';
     }
     
@@ -397,7 +401,9 @@ td#search input, td#browseBtn input {
 							
 							</tr>
 							
+							<?php if(isset($_SESSION['loggedIn'])){
 							
+							?>
 							<tr>
 								<td colspan=2><label>And</label></td>
 								<td colspan=2><input style="margin: 10px 10px 10px 10px"
@@ -406,7 +412,8 @@ td#search input, td#browseBtn input {
 									 /></td>
 								<td><a href ="#" onclick="fillHomeLib();">Fill HomeLib</a></td>
 							</tr>
-
+							<?php }
+							?>
 							<tr>
 								<td id='search' colspan=7><input value='Search' name='Search'
 									id="caSubmitBtn" type="submit" tabindex="10" name="CmdCreate"
