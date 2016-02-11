@@ -398,6 +398,7 @@ td#search input, td#browseBtn input {
 									name="lng" value="" type="hidden"></td>
 							
 							</tr>
+							<?php if($_SESSION['type']=='Store' || $_SESSION['type']=='Customer'){ ?>
 							<tr>
 								<td colspan=2><label>And</label></td>
 								<td colspan=2><input style="margin: 10px 10px 10px 10px"
@@ -406,6 +407,7 @@ td#search input, td#browseBtn input {
 									 /></td>
 								<td><a href ="#" onclick="fillHomeLib();">Fill HomeLib</a></td>
 							</tr>
+							<?php } ?>
 							<tr>
 								<td id='search' colspan=7><input value='Search' name='Search'
 									id="caSubmitBtn" type="submit" tabindex="10" name="CmdCreate"
