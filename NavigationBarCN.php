@@ -189,12 +189,12 @@ li:hover dt{
 		<?php
 		if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] != True) {
 			?>
-			<a class="menulink topNav" href="login.php" >登錄</a>
+			<a class="menulink topNav" href="loginCN.php" >登錄</a>
 			<a class="menulink topNav roundedRightbottom" href="signUp.php">註冊</a>
 			<?php
 		} else {
 			?>
-			<a class="menulink topNav  roundedRightbottom" href="login.php?action=logout" >Logout</a>
+			<a class="menulink topNav  roundedRightbottom" href="loginCN.php?action=logout" >退出</a>
 			<?php
 		}
 		?>
@@ -203,19 +203,18 @@ li:hover dt{
 <div align="center" class='grayNavBar' style="margin-top:10px;">
 	<nav>
 		<ul class="clear">
-			<li class="first"><a class="menulink" href="homepage.php">英文主頁</a></li>
+			　 <li class="first"><a class="menulink" href="homepageCN.php">查找</a></li> 
 		<?php
 			if (isset($_SESSION['type']) && $_SESSION['type']=='Customer') {
 		?>
 					
-			<li class="first"><a class="menulink" href="CustomerOutitems_Return.php">Return</a></li>
-			<li class="first"><a class="menulink" href="customerProfile.php">Profile</a></li>
-			<li class="first"><a class="menulink" href="Borrow.php">Borrow</a></li>
-			<li class="first"><a class="menulink" href="CustomerActiveOrders.php">Orders</a></li>
-			<li class="first"><a class="menulink" href="CustomerAccount.php">Account</a></li>
-			<li class="first"><a class="menulink" href="CustomerMembership.php">Lib Membership</a></li>
-			<li class="first"><a class="menulink" href="CustomerOrderHistory.php">History</a></li>
-							
+			<li class="first"><a class="menulink" href="CustomerOutitems_ReturnCN.php">还书</a></li>
+			<li class="first"><a class="menulink" href="BorrowCN.php">借书</a></li>
+			<li class="first"><a class="menulink" href="CustomerActiveOrdersCN.php">预订</a></li>
+			<li class="first"><a class="menulink" href="CustomerAccountCN.php">账户</a></li>
+			<li class="first"><a class="menulink" href="CustomerMembershipCN.php">会员</a></li>
+			<li class="first"><a class="menulink" href="CustomerOrderHistoryCN.php">借书记录</a></li>
+			<li class="first"><a class="menulink" href="customerProfileCN.php">个人资料</a></li>				
 		<?php
 			} else if (isset($_SESSION['type']) && $_SESSION['type']=='Store') {
 		?>
@@ -224,15 +223,15 @@ li:hover dt{
 			<li class="first"><a class="menulink" href="storeOnsitePayment.php">Onsite Checkout</a></li>
 			<li class="first"><a class="menulink" href="storeOrderStatus.php">Order Status</a></li>
 			<li class="first"><a class="menulink" href="storeCheckout.php">Online Checkout</a></li>
-			<li class="first"><a class="menulink" href="BulkShelfing.php">Lib Return</a></li>
-			<li class="first"><a class="menulink" href="StoreShelfing.php">Shelfing</a></li><br>
+			<li class="first"><a class="menulink" href="BulkShelfing.php">批量上架</a></li>
+			<li class="first"><a class="menulink" href="StoreShelfing.php">特殊上架</a></li><br>
 			<li class="first"><a class="menulink" href="">Procure</a></li>
 			<li class="first"><a class="menulink" href="InsertBook.php">Insert Books</a></li>
 			<li class="first"><a class="menulink" href="storeAccount.php">Account</a></li>
-			<li class="first"><a class="menulink" href="StoreProfile.php">Profile</a></li>
+			<li class="first"><a class="menulink" href="StoreProfile.php">图书馆信息</a></li>
 			<li class="first"><a class="menulink" href="">Statistics</a></li>
-			<li class="first"><a class="menulink" href="StoreMembership.php">Lib Members</a></li>
-			<li class="first"><a class="menulink" href="storeReturns.php">Out Items</a></li>
+			<li class="first"><a class="menulink" href="StoreMembership.php">会员管理</a></li>
+			<li class="first"><a class="menulink" href="storeReturns.php">未还书籍</a></li>
 		<?php
 			} else if (isset($_SESSION['type']) && $_SESSION['type']=='Admin') {
 		?>
@@ -246,7 +245,7 @@ li:hover dt{
 		<?php
 			} else {
 		?>
-			<li class="first"><a class="menulink" href="homepageCN.php">教會圖書館主頁</a></li>
+			 <li class="first"><a class="menulink" href="homepage.php">英文主頁</a></li>
 			
 		<?php
 			}

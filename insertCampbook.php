@@ -12,7 +12,7 @@ div.container {
 	padding: 10px !important;
 	border: 1px solid #eee;
 	border-radius: 10px;
-	width: 50%;
+	width: 60%;
 	margin: auto;
 }
 
@@ -405,6 +405,23 @@ function populateSelect(){
 		});
 	}
 
+    function generateISBN() {
+    	//alert("Do you want to generate new ISBN");
+    	 	$.ajax({
+             method: "POST",
+             url: "generateISBN.php",
+           }).done(function( response ) {
+               responseJSON = JSON.parse(response);
+               if (responseJSON['error'] != undefined) {
+                   alert("Error occured while generating new ISBN. Please try again");
+               }
+               else {
+            	   alert("ISBN generated successfully");
+                   var newisbn = responseJSON['newisbn'];
+                   $('#isbn').val(newisbn);
+               }
+           });
+        }    
 
     function insertBook() {
         if ($('#bookCategory').val() == "") {
@@ -566,34 +583,41 @@ function populateSelect(){
 			action="insertCampbook.php" method="POST">
 			<table id="resultTable">
 				<tr>
-					<th>ISBN-10</th>
+					<th>ISBN-10<sup>*</sup></th>
 					<td><input id="isbn" name="isbn" type=text /></td>
 					<th>ISBN-13</th>
 					<td><input id="isbn13" name="isbn13" type=text /></td>
-					<td><a href="#" id="search" name="Go" onclick="fetchInfo()">Auto
-							Fill</a></td>
+					<td width=90%><a href="#" id="search" name="Go" onclick="fetchInfo()">自动填充</a></td>
 				</tr>
+
+                                <tr>
+					<th>如果本书没有ISBN</th>
+					<td><input type="button" id="reqISBN" name="reqISBN"
+						onclick="generateISBN();" value="请求 ISBN" /></td>
+						
+        			</tr>
+
 				<tr>
-					<th>Title<sup>*</sup>
+					<th>书名<sup>*</sup>
 					</th>
 					<td><input type=text id="title" name="title" /></td>
-					<th>Alt Title</th>
+					<th>英文书名</th>
 					<td><input type=text name="altTitle" id="bookAltTitle" /></td>
 				</tr>
 				<tr>
-					<th>Sub-Title</th>
+					<th>副标题</th>
 					<td><input id="bookSubTitle" name="subTitle" type=text /></td>
-					<th>Language</th>
+					<th>语言</th>
 					<td><input id="bookLanguage" name="language" type=text /></td>
 				</tr>
 				<tr>
-					<th>Authors<sup>*</sup></th>
+					<th>作者<sup>*</sup></th>
 					<td><input type=text id="author" name="author" t /></td>
 				</tr>
 				<tr>
-					<th>Edition Number</th>
+					<th>版本</th>
 					<td><input type=text name="edition" id="bookEdition" /></td>
-					<th>Edition Type</th>
+					<th>版本类型</th>
 					<td><input type=text name="editionType" id="bookEditionType" /></td>
 				</tr>
 				<tr>
@@ -604,34 +628,34 @@ function populateSelect(){
 						id="bookAmazonURL" /></th>
 				</tr>
 				<tr>
-					<th>Call Number</th>
+					<th>本馆书号</th>
 					<td><input type=text name="callNum" id="bookCallNumber" /></td>
-					<th>Audience</th>
+					<th>读者</th>
 					<td><input type=text name="audience" id="audience" /></td>
 				</tr>
 				<tr>
-					<th>Publisher</th>
+					<th>出版社</th>
 					<td><input type=text id="publisher" name="publisher" /></td>
-					<th>Published Date</th>
+					<th>出版日期</th>
 					<td><input type=text name="publishedDate" id="bookPublishedYear" /></td>
 				</tr>
 				<tr>
-					<th>Product format Details</th>
+					<th>产品信息</th>
 					<td><input type=text name="productFormat"
 						id="bookProductFormatDetails" /></td>
-					<th>Pages</th>
+					<th>页数</th>
 					<td><input type=text name="pages" id="bookPages" /></td>
 				</tr>
 				<tr>
-					<th>From Back Cover</th>
+					<th>书背信息</th>
 					<td><input type=text name="description" id="bookFromBackCover" /></td>
 				</tr>
 				<tr>
-					<th>Content</th>
+					<th>目录</th>
 					<td><input type=text name="content" id="bookContent" /></td>
 				</tr>
 				<tr>
-					<th>Category<sup>*</sup>
+					<th>主类<sup>*</sup>
 					</th>
 					<td><select id="bookCategory" name="category">
 							<option value="">主類</option>
@@ -650,28 +674,28 @@ function populateSelect(){
                                                         <option value="M. 影音光碟">M. 影音光碟</option>
                                                         <option value="N. 影音軟體">N. 影音軟體</option>
 					</select></td>
-					<th>SubCategory<sup>*</sup>
+					<th>次类<sup>*</sup>
 					</th>
 					<td><select id="bookSubCategory" name="subCategory">
-							<option value="">Subcategory</option>
+							<option value="">次类</option>
 					</select></td>
 				</tr>
 				<tr>
-					<th>SubSubCategory</th>
+					<th>小类</th>
 				 	<td><select id="bookSubSubCategory" name="subSubCategory">
 							<option value="">Sub-Subcategory</option>
 					</select></td>
-					<th>Keywords</th>
+					<th>关键字</th>
 					<td><input type=text name="keywords" id="bookKeywords" /></td>
 				</tr>
 				<tr>
-					<th>Product Dimensions</th>
+					<th>尺寸</th>
 					<td><input type=text name="dimensions" id="bookProductDimensions" /></td>
-					<th>Shipping Weight</th>
+					<th>重量</th>
 					<td><input type=text name="shippingWeight" id="bookShippingWeight" /></td>
 				</tr>
 			</table>
-			<button id="search" name="Go" onclick="javascript:insertBook();">Insert</button>
+			<button id="search" name="Go" onclick="javascript:insertBook();">提交</button>
 		</form>
 
 	</div>

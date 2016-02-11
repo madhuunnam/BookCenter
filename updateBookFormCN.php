@@ -346,12 +346,12 @@ function populateSelect(){
 <?php include 'NavigationBar.php'; ?>
 
 
-	<h2>Update Book Information</h2>
+	<h2>修改书籍信息</h2>
 
         <form name = "isbnForm" action = "updateBookFormCN.php" method ="POST">
              ISBN-13 or ISBN-10 <sup>*</sup>
              <input id="isbn" name="isbn" type=text />
-             <button  type = "submit" name="autofill" >Auto Fill</button>
+             <button  type = "submit" name="autofill" >自动填充</button>
         </form>
 
         <form id="updateBookFormCN" name="update_book_form" action="updateBook.php" method="POST">
@@ -361,26 +361,26 @@ function populateSelect(){
                         <input type="hidden" name="isbn10" id="isbn10" value="<?php echo htmlentities($isbn10); ?>"/>
                         
                         <tr>
-                                <th>Title<sup>*</sup>
+                                <th>书名<sup>*</sup>
                                 </th>
                                 <td><input type=text id="title" name="title" value="<?php echo htmlentities($title); ?>"/></td>
                                 <th>Alt Title</th>
                                 <td><input type=text name="altTitle" id="bookAltTitle" value="<?php echo htmlentities($altTitle); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Sub-Title</th>
+                                <th>副标题</th>
                                 <td><input id="bookSubTitle" name="subTitle" type=text value="<?php echo htmlentities($subTitle); ?>"/></td>
-                                <th>Language</th>
+                                <th>语言</th>
                                 <td><input id="bookLanguage" name="language" type=text value="<?php echo htmlentities($language); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Authors<sup>*</sup></th>
+                                <th>作者<sup>*</sup></th>
                                 <td><input type=text id="author" name="author" value="<?php echo htmlentities($author); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Edition Number</th>
+                                <th>版号</th>
                                 <td><input type=text name="edition" id="bookEdition" value="<?php echo htmlentities($editionNumber); ?>"/></td>
-                                <th>Edition Type</th>
+                                <th>版本类型</th>
                                 <td><input type=text name="editionType" id="bookEditionType" value="<?php echo htmlentities($editionType); ?>"/></td>
                         </tr>
                         <tr>
@@ -391,34 +391,34 @@ function populateSelect(){
                                         id="bookAmazonURL" value="<?php echo htmlentities($amazonRevLink); ?>"/></th>
                         </tr>
                         <tr>
-                                <th>Call Number</th>
+                                <th>本馆书号</th>
                                 <td><input type=text name="callNum" id="bookCallNumber" value="<?php echo htmlentities($callNum); ?>"/></td>
-                                <th>Audience</th>
+                                <th>读者</th>
                                 <td><input type=text name="audience" id="audience" value="<?php echo htmlentities($audience); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Publisher</th>
+                                <th>出版社</th>
                                 <td><input type=text id="publisher" name="publisher" value="<?php echo htmlentities($publisherName); ?>"/></td>
-                                <th>Published Date</th>
+                                <th>出版日期</th>
                                 <td><input type=text name="publishedDate" id="bookPublishedYear" value="<?php echo htmlentities($pubDate); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Product format Details</th>
+                                <th>产品信息</th>
                                 <td><input type=text name="productFormat"
                                         id="bookProductFormatDetails" value="<?php echo htmlentities($productFormatDetail); ?>"/></td>
-                                <th>Pages</th>
+                                <th>页数</th>
                                 <td><input type=text name="pages" id="bookPages" value="<?php echo htmlentities($pages); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>From Back Cover</th>
+                                <th>书背信息</th>
                                 <td><input type=text name="description" id="bookFromBackCover" value="<?php echo htmlentities($fromBackCover); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Content</th>
+                                <th>目录</th>
                                 <td><input type=text name="content" id="bookContent" value="<?php echo htmlentities($contents); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Category<sup>*</sup>
+                                <th>主类<sup>*</sup>
                                 </th>
                                 <td><select id="bookCategory" name="category" >
                                                 <option value="<?php echo htmlentities($category); ?>"><?php echo htmlentities($category); ?></option>
@@ -438,28 +438,28 @@ function populateSelect(){
                                                         <option value="M. 影音光碟">M. 影音光碟</option>
                                                         <option value="N. 影音軟體">N. 影音軟體</option>
                                 </select></td>
-                                <th>SubCategory<sup>*</sup>
+                                <th>次类<sup>*</sup>
                                 </th>
                                 <td><select id="bookSubCategory" name="subCategory" >
                                                 <option value="<?php echo htmlentities($subCat); ?>"> <?php echo htmlentities($subCat); ?> </option>
                                 </select></td>
                         </tr>
                         <tr>
-                                <th>SubSubCategory</th>
+                                <th>小类</th>
                                 <td><select id="bookSubSubCategory" name="subSubCategory" >
                                                 <option value="<?php echo htmlentities($subSubCat); ?>"> <?php echo htmlentities($subSubCat); ?></option>
                                 </select></td>
-                                <th>Keywords</th>
+                                <th>关键字</th>
                                 <td><input type=text name="keywords" id="bookKeywords" value="<?php echo htmlentities($keywords); ?>"/></td>
                         </tr>
                         <tr>
-                                <th>Product Dimensions</th>
+                                <th>尺寸</th>
                                 <td><input type=text name="dimensions" id="bookProductDimensions" value="<?php echo htmlentities($productDimensions); ?>"/></td>
-                                <th>Shipping Weight</th>
+                                <th>重量</th>
                                 <td><input type=text name="shippingWeight" id="bookShippingWeight" value="<?php echo htmlentities($shippingWeight); ?>"/></td>
                         </tr>
                 </table>
-                <button id="update" name="Go" onclick="validateAndSubmit();">Update</button>
+                <button id="update" name="Go" onclick="validateAndSubmit();">修改</button>
         </form>
 
 </body>
