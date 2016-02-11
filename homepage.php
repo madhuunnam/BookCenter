@@ -372,8 +372,7 @@ td#search input, td#browseBtn input {
 								<td colspan=2><input style="margin: 10px 10px 10px 10px"
 									type="text" name="callnum" id="callnum"
 									style="border:1; width:365px; height:23px; line-height:22px; padding:0 5px 0 5px; color:#c4c4c4;font-family: Arial"
-									onblur="changeColorGray4(this)"
-									onclick="changeColorBlack4(this)" /></td>
+									 /></td>
 							</tr>
 							<tr>
 								<td colspan=2><label>And</label></td>
@@ -404,8 +403,7 @@ td#search input, td#browseBtn input {
 								<td colspan=2><input style="margin: 10px 10px 10px 10px"
 									type="text" name="libName" id="libName" placeholder = "Library Name"
 									style="border:1; width:365px; height:23px; line-height:22px; padding:0 5px 0 5px; color:#c4c4c4;font-family: Arial"
-									onblur="changeColorGray4(this)"
-									onclick="changeColorBlack4(this)" /></td>
+									 /></td>
 								<td><a href ="#" onclick="fillHomeLib();">Fill HomeLib</a></td>
 							</tr>
 							<tr>
