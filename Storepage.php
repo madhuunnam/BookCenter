@@ -1907,32 +1907,25 @@ if (! $first) {
 																<td style='text-align:left;' colspan=2><b>Amazon Link:</b> <a href = $amazonLink>$amazonLink</a></td>
 															</tr>
 															<tr>
-																<td style='text-align:left;' ><b>Publisher:</b></td>
-																<td style='text-align:left;' colspan=2>$publisher</td>
-																<td style='text-align:left;'>$bookyear ($pages pages)</td>
+																<td style='text-align:left;'  colspan=2><b>Publisher:</b> $publisher</td>
+																<td style='text-align:left;' colspan=2>$bookyear ($pages pages)</td>
 															</tr>
 															<tr>
-																<td style='text-align:left;'><b>Category:</b></td>
-																<td style='text-align:left;'>$category</td>
-																<td style='text-align:left;'><b>SubCategory:</b></td>
-																<td style='text-align:left;'>$subcategory</td>
+																<td style='text-align:left;'  colspan=2><b>Category:</b> $category</td>
+																<td style='text-align:left;'  colspan=2><b>SubCategory:</b> $subcategory</td>
 															</tr>
 															<tr>
-																<td style='text-align:left;'><b>SubSubCategory:</b></td>
-																<td style='text-align:left;'>$subSubCat</td>
+																<td style='text-align:left;' colspan=2><b>SubSubCategory:</b></td>
+																<td style='text-align:left;' colspan=2>$subSubCat</td>
 																
 															</tr>
 															<tr>
-																<td style='text-align:left;' ><b>Call Number:</b></td>
-																<td style='text-align:left;'>$privateCallNum</td>
-									                            <td style='text-align:left;' ><b>Translator:</b></td>
-																<td style='text-align:left;'>$translator</td>
+																<td style='text-align:left;' colspan=2><b>Call Number:</b>$privateCallNum</td>
+									                            <td style='text-align:left;'colspan=2 ><b>Translator:</b>$translator</td>
 															</tr>
 															<tr>
-																<td style='text-align:left;' ><b>Language:</b></td>
-																<td style='text-align:left;'>$language</td>
-									                            <td style='text-align:left;' ><b>Audience:</b></td>
-																<td style='text-align:left;'>$audience</td>
+																<td style='text-align:left;' colspan=2><b>Language:</b>$language</td>
+									                            <td style='text-align:left;'colspan=2 ><b>Audience:</b>$audience</td>
 															</tr>
 															<tr>
 																<td style='text-align:left;' colspan=2><b> Product Format Details: </b> $productFormatDetail</td>
